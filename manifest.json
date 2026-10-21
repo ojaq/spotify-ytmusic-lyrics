@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Lyrica",
+  "version": "0.4.0",
+  "description": "Synced lyrics with romaji for Spotify Web Player. Finds lyrics itself, so it works even when Spotify has none.",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://lrclib.net/*",
+    "https://music.163.com/*",
+    "https://genius.com/*",
+    "https://i.scdn.co/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://open.spotify.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dict/*"
+      ],
+      "matches": [
+        "https://open.spotify.com/*"
+      ]
+    }
+  ]
+}
