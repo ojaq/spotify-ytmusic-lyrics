@@ -1,19 +1,27 @@
 {
   "manifest_version": 3,
   "name": "Lyrica",
-  "version": "0.4.0",
-  "description": "Synced lyrics with romaji for Spotify Web Player. Finds lyrics itself, so it works even when Spotify has none.",
+  "version": "1.0",
+  "description": "Synced lyrics with romaji for Spotify Web Player and YouTube Music. Finds lyrics itself from several sources.",
   "icons": {
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "declarativeNetRequest"
   ],
   "host_permissions": [
     "https://lrclib.net/*",
     "https://music.163.com/*",
     "https://genius.com/*",
-    "https://i.scdn.co/*"
+    "https://mobilecdn.kugou.com/*",
+    "https://lyrics.kugou.com/*",
+    "https://c.y.qq.com/*",
+    "https://www.youtube.com/*",
+    "https://*.scdn.co/*",
+    "https://*.googleusercontent.com/*",
+    "https://*.ggpht.com/*",
+    "https://*.ytimg.com/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -21,12 +29,23 @@
   "content_scripts": [
     {
       "matches": [
-        "https://open.spotify.com/*"
+        "https://open.spotify.com/*",
+        "https://music.youtube.com/*"
       ],
       "js": [
         "content.js"
       ],
       "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://music.youtube.com/*"
+      ],
+      "js": [
+        "main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
     }
   ],
   "web_accessible_resources": [
@@ -35,7 +54,8 @@
         "dict/*"
       ],
       "matches": [
-        "https://open.spotify.com/*"
+        "https://open.spotify.com/*",
+        "https://music.youtube.com/*"
       ]
     }
   ]

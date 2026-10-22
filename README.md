@@ -1,26 +1,95 @@
 # Lyrica
 
-Synced lyrics + romaji for Spotify Web Player (Chrome / Chromium).
+Synced lyrics with romaji for the Spotify Web Player and YouTube Music (Chrome and other Chromium browsers).
+
+Lyrica finds lyrics itself instead of relying on what the site provides, draws its own panel, and keeps working from one song to the next without refreshing.
 
 ## Install
-1. Unzip this folder somewhere permanent.
-2. Open chrome://extensions and turn on Developer mode.
-3. Load unpacked -> select the folder.
-4. Open https://open.spotify.com and play a song. Click the Lyrica button next to Spotify's lyrics button (or press Alt+L). It replaces the main view, so the queue and sidebars stay usable. Clicking anything in Spotify closes it.
 
-## How it differs from Moegi / Spotify Karaoke
-- Finds lyrics itself: LRCLIB, then NetEase (synced), then Genius (not synced), so it doesn't depend on Spotify having lyrics.
-- Draws its own panel instead of hooking Spotify's lyrics DOM, so nothing breaks when Spotify re-renders.
-- Reads now-playing fresh every 150 ms and keys everything by song, so the next track always loads and romanizes with no refresh.
-- If the Japanese dictionary fails to load once, it retries on the next song.
+1. Unzip this folder somewhere permanent (Chrome loads it from there every time).
+2. Open `chrome://extensions` and turn on **Developer mode**.
+3. Click **Load unpacked** and select the folder.
+4. Open `open.spotify.com` or `music.youtube.com` and play a song.
 
-## Fixing it if Spotify changes its markup
-All Spotify selectors live in the SEL block at the top of src/content.js.
-Rebuild: npm i && node build.mjs
+To update, replace the folder's contents and click the reload icon on Lyrica in `chrome://extensions`.
 
-## Controls
+## Using it
+
+- Click the **Lyrica button** in the player bar (next to Spotify's lyrics button, or beside YouTube Music's player controls), or press **Alt+L**. If the site's layout changes and the button can't be placed, a floating "Lyrics" button appears instead.
+- The panel covers the main content area, so the sidebar, queue and player bar stay usable. Navigating to another page closes it.
 - Click any synced line to jump the song to it.
-- Scroll away freely; "Back to current line" snaps you back and resumes following.
-- "Cover colors" themes the panel from the album art.
-- "Find lyrics" searches LRCLIB, NetEase and Genius by hand. Your pick is remembered for that song ("Back to automatic" clears it).
-- "Genius romaji" prefers Genius's own romanization pages (not synced) over synced lyrics.
+- Scroll freely. A **Back to current line** button appears; click it to resume following.
+- **Sync** buttons (−1 s, −0.1, +0.1, +1 s) fix timing. A positive value shows lyrics earlier. The value is remembered per song.
+
+### Toolbar
+
+| Control | What it does |
+| --- | --- |
+| Romaji + original / Romaji only / Original only | Cycles the display mode |
+| A− / A+ | Text size |
+| Align | Left or centered text |
+| Cover colors | Themes the panel from the album art |
+| Fix readings | Correct how a word is romanized (see Romaji) |
+| Genius romaji | Prefers Genius's own romanization pages (not synced) over synced lyrics |
+| Sync | Per-song timing adjustment |
+| Find lyrics | Manual search (see below) |
+
+## Where lyrics come from
+
+Sources are tried in this order, stopping at the first synced match for the song's length:
+
+1. LRCLIB
+2. NetEase
+3. KuGou
+4. QQ Music
+5. YouTube captions (YouTube Music only): uploaded, not auto-generated, captions of the video being played, timed to that exact video
+6. The closest other version of the same song within 60 seconds of the length (for example a studio cut when you are playing a live recording). The header says so; use Sync to fix the timing.
+7. Unsynced lyrics from LRCLIB, then Genius
+
+To make matching more forgiving, Lyrica searches several spellings: the title as given, with brackets and suffixes like "Live" or "Remastered" removed, the leading part before a dash, text inside brackets, the title alone (without the artist), and romanized versions of Japanese or Korean names.
+
+## Romaji
+
+- Japanese uses a bundled dictionary (kuromoji) with Hepburn romanization and long vowels written with macrons (hōshō, tsunagō). Words are divided the way romanized lyrics usually are: suffixes, auxiliary verbs and prefixes stay attached (kaizokudan, aishiteru, otomodachi), particles stay separate (wa, o, ni), and brackets and punctuation are spaced normally. Numbers are read as Japanese numerals (6 becomes roku).
+- Korean, Chinese (pinyin) and other scripts are converted as well.
+- Genius "Romanization" pages are already romaji and are shown as they are.
+
+### Fix readings
+
+Lyrics often use readings the dictionary can't guess (names, or a kanji read in a non-standard way). Open **Fix readings** and add one correction per line, written as the lyric text, then `=`, then the reading:
+
+```
+宝鐘=hōshō
+陸=おか
+```
+
+- A reading written in Latin letters is used exactly as written. A reading written in hiragana or katakana is converted to romaji.
+- **This song only** applies to the current song. **All songs** applies everywhere. The longest matching text wins.
+- Lines starting with `#` are comments. Saving re-romanizes the lyrics on screen immediately.
+- A few common names (for example 宝鐘マリン, 兎田ぺこら, 星街すいせい) are built in.
+
+## When a song doesn't show up
+
+- The panel lists **What I tried**: how many hits each source returned and how close their lengths were. This usually shows whether a song is missing everywhere or just failing to match.
+- **Find lyrics** searches LRCLIB, NetEase, KuGou, QQ Music and Genius by hand. The search box starts with the song title only; add or change words freely (the original title and an English or romaji title can both work). Results show length, whether they are synced, and the source. Your pick is remembered for that song; **Back to automatic** clears it.
+- If the panel doesn't take on the album's colors, hover over **Cover colors**: its tooltip says whether no image was found or the image couldn't be read.
+- If lyrics appear but the timing is off, they may be another version. Adjust with the Sync buttons.
+- If romaji is missing but lyrics show, the dictionary may have failed to load. Reload the page; it retries on the next song.
+
+## Permissions
+
+| Permission | Why |
+| --- | --- |
+| Access to `open.spotify.com`, `music.youtube.com` | Read the current song and show the panel |
+| `lrclib.net`, `music.163.com`, `lyrics.kugou.com`, `mobilecdn.kugou.com`, `c.y.qq.com`, `genius.com`, `www.youtube.com` | Look up lyrics and captions |
+| Album art hosts (`*.scdn.co`, `*.googleusercontent.com`, `*.ggpht.com`, `*.ytimg.com`) | Read album art to theme the panel |
+| `storage` | Remember your settings, picks and per-song sync |
+| `declarativeNetRequest` | Add the `Referer` header QQ Music requires, for requests to QQ only |
+
+Lyrica sends the song title, artist and length to the lyrics sources above. It does not collect anything else and has no server of its own.
+
+## If a site changes its layout
+
+- Spotify and YouTube Music selectors are kept together at the top of `src/content.js` (the `SEL` block and the YouTube Music helpers).
+- The panel's position is worked out from landmarks (sidebars, top bar, player bar). If those can't be found it docks to the right edge instead of disappearing.
+- Rebuild after editing: `npm i && node build.mjs`, then reload the extension.
