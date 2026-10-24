@@ -101,3 +101,10 @@ Lyrica sends the song title, artist and length to the lyrics sources above. It d
 - Spotify and YouTube Music selectors are kept together at the top of `src/content.js` (the `SEL` block and the YouTube Music helpers).
 - The panel's position is worked out from landmarks (sidebars, top bar, player bar). If those can't be found it docks to the right edge instead of disappearing.
 - Rebuild after editing: `npm i && node build.mjs`, then reload the extension.
+
+## Screenshots
+<img width="1602" height="899" alt="Screenshot 2026-10-24 at 10 57 41" src="https://github.com/user-attachments/assets/b7ccaf31-b8fe-497c-9aa8-9bd092fb2dcf" />
+<img width="1600" height="899" alt="Screenshot 2026-10-24 at 10 57 54" src="https://github.com/user-attachments/assets/8a10c4de-64e1-4653-b0af-35e666af3152" />
+<img width="1680" height="905" alt="Screenshot 2026-10-24 at 10 59 51" src="https://github.com/user-attachments/assets/92b6f9a5-f96d-4f75-8441-4a406de72eb9" />
+<img width="1680" height="909" alt="Screenshot 2026-10-24 at 11 00 15" src="https://github.com/user-attachments/assets/2ceeb644-04da-4827-a51b-0c8c7256ba06" />
+
