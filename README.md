@@ -16,12 +16,18 @@ To update, replace the folder's contents and click the reload icon on Lyrica in 
 ## Using it
 
 - Click the **Lyrica button** in the player bar (next to Spotify's lyrics button, or beside YouTube Music's player controls), or press **Alt+L**. If the site's layout changes and the button can't be placed, a floating "Lyrics" button appears instead.
-- The panel covers the main content area, so the sidebar, queue and player bar stay usable. Navigating to another page closes it.
+- The panel covers the main content area, so the sidebar, queue and player bar stay usable. On YouTube Music's player page it stops at the Up next / Lyrics / Related panel. Navigating to another page closes it.
+- The current line is highlighted with a bar, a lighter background and a slight enlargement; other lines fade with distance.
 - Click any synced line to jump the song to it.
 - Scroll freely. A **Back to current line** button appears; click it to resume following.
-- **Timing:** lyrics appear a little early by default (+1.0 s on Spotify, +0.5 s on YouTube Music), because the players' clocks run slightly behind the audio. The **Sync** buttons (−1 s, −0.1, +0.1, +1 s) adjust the current song; a positive value shows lyrics earlier, and the value is remembered for that song. **Set default** makes the current timing the default for every song that doesn't have its own.
 - Lyrics stay loaded while the music is paused or the page briefly shows nothing, and a song you have already opened is not looked up again.
-- The current line is highlighted with a bar, a lighter background and a slight enlargement; other lines fade with distance.
+
+### Timing
+
+Lyrics appear a little early by default (+1.0 s on Spotify, +0.5 s on YouTube Music), because the players' clocks run slightly behind the audio.
+
+- The **Sync** buttons (−1 s, −0.1, +0.1, +1 s) adjust the current song. A positive value shows lyrics earlier. The value is remembered for that song.
+- **Set default** makes the current timing the default for every song that doesn't have its own.
 
 ### Toolbar
 
@@ -84,17 +90,23 @@ Lyrics often use readings the dictionary can't guess (names, or a kanji read in 
 - If lyrics appear but the timing is off, they may be another version. Adjust with the Sync buttons.
 - If romaji is missing but lyrics show, the dictionary may have failed to load. Reload the page; it retries on the next song.
 
-## Permissions
+## Screenshots
+<img width="1602" height="899" alt="Screenshot 2026-10-24 at 10 57 41" src="https://github.com/user-attachments/assets/b7ccaf31-b8fe-497c-9aa8-9bd092fb2dcf" />
+<img width="1600" height="899" alt="Screenshot 2026-10-24 at 10 57 54" src="https://github.com/user-attachments/assets/8a10c4de-64e1-4653-b0af-35e666af3152" />
+<img width="1680" height="905" alt="Screenshot 2026-10-24 at 10 59 51" src="https://github.com/user-attachments/assets/92b6f9a5-f96d-4f75-8441-4a406de72eb9" />
+<img width="1680" height="909" alt="Screenshot 2026-10-24 at 11 00 15" src="https://github.com/user-attachments/assets/2ceeb644-04da-4827-a51b-0c8c7256ba06" />
+
+## Permissions and privacy
 
 | Permission | Why |
 | --- | --- |
 | Access to `open.spotify.com`, `music.youtube.com` | Read the current song and show the panel |
-| `lrclib.net`, `music.163.com`, `lyrics.kugou.com`, `mobilecdn.kugou.com`, `c.y.qq.com`, `genius.com`, `www.youtube.com` | Look up lyrics and captions |
+| `lrclib.net`, `music.163.com`, `lyrics.kugou.com`, `mobilecdn.kugou.com`, `c.y.qq.com`, `genius.com`, `www.youtube.com` | Look up lyrics, romaji and captions |
 | Album art hosts (`*.scdn.co`, `*.googleusercontent.com`, `*.ggpht.com`, `*.ytimg.com`) | Read album art to theme the panel |
-| `storage` | Remember your settings, picks and per-song sync |
+| `storage` | Remember your settings, picks, reading fixes and per-song timing |
 | `declarativeNetRequest` | Add the `Referer` header QQ Music requires, for requests to QQ only |
 
-Lyrica sends the song title, artist and length to the lyrics sources above. It does not collect anything else and has no server of its own.
+Lyrica sends the song title, artist and length to the lyrics sources above. It does not collect anything else and has no server of its own. Settings stay in your browser.
 
 ## If a site changes its layout
 
@@ -102,9 +114,46 @@ Lyrica sends the song title, artist and length to the lyrics sources above. It d
 - The panel's position is worked out from landmarks (sidebars, top bar, player bar). If those can't be found it docks to the right edge instead of disappearing.
 - Rebuild after editing: `npm i && node build.mjs`, then reload the extension.
 
-## Screenshots
-<img width="1602" height="899" alt="Screenshot 2026-10-24 at 10 57 41" src="https://github.com/user-attachments/assets/b7ccaf31-b8fe-497c-9aa8-9bd092fb2dcf" />
-<img width="1600" height="899" alt="Screenshot 2026-10-24 at 10 57 54" src="https://github.com/user-attachments/assets/8a10c4de-64e1-4653-b0af-35e666af3152" />
-<img width="1680" height="905" alt="Screenshot 2026-10-24 at 10 59 51" src="https://github.com/user-attachments/assets/92b6f9a5-f96d-4f75-8441-4a406de72eb9" />
-<img width="1680" height="909" alt="Screenshot 2026-10-24 at 11 00 15" src="https://github.com/user-attachments/assets/2ceeb644-04da-4827-a51b-0c8c7256ba06" />
+## Sources and credits
 
+Lyrica's code was written for this project. Nothing below was copied in as source code; the libraries in the last group are bundled as published, under their own licenses.
+
+### Projects it grew out of or learned from
+
+| Project | What it was for Lyrica |
+| --- | --- |
+| [Moegi](https://github.com/sglkc/moegi) (sglkc) | Spotify lyrics extension with romanization. Its limits (no lyrics when Spotify has none, needing a refresh between songs) were the starting point for Lyrica. |
+| [Spotify Karaoke](https://github.com/haroldalan/spotify-karaoke) (haroldalan) | Same role as Moegi: the other extension that motivated Lyrica's own panel and per-song loading. |
+| [Lyrics for Spotify](https://github.com/angeloevangelista/lyrics-for-spotify) (angeloevangelista) | The idea of a separate button beside Spotify's own lyrics button that replaces the lyrics view instead of overlaying the page. |
+| [Better Lyrics](https://github.com/better-lyrics/better-lyrics) (GPL-3.0) | Studied to see which kinds of sources a YouTube Music lyrics extension combines, including reading a video's uploaded captions from the player, and what its "Legato" (KuGou) and "Portato" (QQ Music) sources are. Lyrica's implementations are separate and independent; no code was taken from it. |
+
+### Lyrics, romaji and captions
+
+Lyrica looks things up from these services at runtime. It is not affiliated with any of them, and it does not store or host lyrics.
+
+| Service | Used for |
+| --- | --- |
+| [LRCLIB](https://lrclib.net) | Synced and plain lyrics (an open, community lyrics database) |
+| [NetEase Cloud Music](https://music.163.com) | Synced lyrics, and its romaji lyrics (`romalrc`) |
+| [KuGou](https://www.kugou.com) | Synced lyrics |
+| [QQ Music](https://y.qq.com) | Synced lyrics |
+| [Genius](https://genius.com) | Plain lyrics, and the community "Genius Romanizations" pages used as existing romaji |
+| YouTube / YouTube Music | Uploaded captions of the playing video, and album art |
+| Spotify | Album art |
+
+The NetEase, KuGou and QQ Music endpoints are not documented public APIs; they are the ones their own web players use, and they can change or stop working at any time. Lyrics belong to their rights holders. Use Lyrica for personal listening, and check each service's terms before doing anything beyond that.
+
+### Libraries bundled in the extension
+
+| Library | License | Used for |
+| --- | --- | --- |
+| [kuromoji.js](https://github.com/takuyaa/kuromoji.js) | Apache-2.0 | Japanese tokenizer (runs in your browser) |
+| mecab-ipadic dictionary (Nara Institute of Science and Technology), shipped with kuromoji in `dict/` | NAIST copyright and license, see `THIRD_PARTY_NOTICES.md` | Japanese readings and word types |
+| [kuroshiro](https://github.com/hexenq/kuroshiro) | MIT | Kana to romaji conversion and the analyzer interface |
+| [kuroshiro-analyzer-kuromoji](https://github.com/hexenq/kuroshiro-analyzer-kuromoji) | MIT | Connects kuromoji to kuroshiro |
+| [any-ascii](https://github.com/anyascii/anyascii) | ISC | Fallback transliteration of other scripts |
+| [@romanize/korean](https://github.com/kntng/romanize) | MIT (declared by the package) | Korean romanization |
+| [pinyin-pro](https://github.com/zh-lx/pinyin-pro) | MIT | Chinese pinyin |
+| [esbuild](https://github.com/evanw/esbuild) | MIT | Build tool only; not shipped |
+
+The full license texts and copyright notices for the bundled libraries and the dictionary are in `THIRD_PARTY_NOTICES.md`. They must stay with any copy of the extension that you share.
