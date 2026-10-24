@@ -19,7 +19,9 @@ To update, replace the folder's contents and click the reload icon on Lyrica in 
 - The panel covers the main content area, so the sidebar, queue and player bar stay usable. Navigating to another page closes it.
 - Click any synced line to jump the song to it.
 - Scroll freely. A **Back to current line** button appears; click it to resume following.
-- **Sync** buttons (−1 s, −0.1, +0.1, +1 s) fix timing. A positive value shows lyrics earlier. The value is remembered per song.
+- **Timing:** lyrics appear a little early by default (+1.0 s on Spotify, +0.5 s on YouTube Music), because the players' clocks run slightly behind the audio. The **Sync** buttons (−1 s, −0.1, +0.1, +1 s) adjust the current song; a positive value shows lyrics earlier, and the value is remembered for that song. **Set default** makes the current timing the default for every song that doesn't have its own.
+- Lyrics stay loaded while the music is paused or the page briefly shows nothing, and a song you have already opened is not looked up again.
+- The current line is highlighted with a bar, a lighter background and a slight enlargement; other lines fade with distance.
 
 ### Toolbar
 
@@ -30,28 +32,33 @@ To update, replace the folder's contents and click the reload icon on Lyrica in 
 | Align | Left or centered text |
 | Cover colors | Themes the panel from the album art |
 | Fix readings | Correct how a word is romanized (see Romaji) |
+| Found romaji | Use romaji lyrics that already exist (NetEase, Genius) instead of generating romaji |
 | Genius romaji | Prefers Genius's own romanization pages (not synced) over synced lyrics |
-| Sync | Per-song timing adjustment |
+| Sync / Set default | Per-song timing adjustment, and the default for all songs |
 | Find lyrics | Manual search (see below) |
 
 ## Where lyrics come from
 
-Sources are tried in this order, stopping at the first synced match for the song's length:
+Sources are tried in this order, stopping at the first synced match for the song's exact length (within 4 seconds):
 
 1. LRCLIB
 2. NetEase
 3. KuGou
 4. QQ Music
 5. YouTube captions (YouTube Music only): uploaded, not auto-generated, captions of the video being played, timed to that exact video
-6. The closest other version of the same song within 60 seconds of the length (for example a studio cut when you are playing a live recording). The header says so; use Sync to fix the timing.
+6. The closest other version of the same song within 15 seconds of the length (for example a slightly different edit). The header says so; use Sync to fix the timing. Anything further off is not used as synced lyrics.
 7. Unsynced lyrics from LRCLIB, then Genius
 
-To make matching more forgiving, Lyrica searches several spellings: the title as given, with brackets and suffixes like "Live" or "Remastered" removed, the leading part before a dash, text inside brackets, the title alone (without the artist), and romanized versions of Japanese or Korean names.
+Matching is deliberate about what counts as the same song. A hit is accepted only when its title and artist match well enough and its length is close, or when the artist matches and the length is within 2 seconds (which covers a romanized title against the original-script title). A different song that merely shares a word with the title is never taken.
+
+To find songs listed under another spelling, Lyrica searches several versions of the title, each **with and without the artist**: the title as given, with brackets and suffixes like "Live" or "Remastered" removed, the leading part before a dash, text inside brackets, and romanized versions of Japanese or Korean names.
 
 ## Romaji
 
-- Japanese uses a bundled dictionary (kuromoji) with Hepburn romanization and long vowels written with macrons (hōshō, tsunagō). Words are divided the way romanized lyrics usually are: suffixes, auxiliary verbs and prefixes stay attached (kaizokudan, aishiteru, otomodachi), particles stay separate (wa, o, ni), and brackets and punctuation are spaced normally. Numbers are read as Japanese numerals (6 becomes roku).
+- **Existing romaji comes first.** For Japanese lyrics Lyrica looks for romaji that already exists: NetEase's romaji lyrics (matched line by line by time), then a Genius "Romanization" page (used only if it has the same number of lines as the lyrics). It is only used if it lines up with the lyrics on screen and really is romaji. The header shows where the romaji came from. Turn this off with **Found romaji**.
+- Otherwise Lyrica generates romaji itself. Japanese uses a bundled dictionary (kuromoji) with Hepburn romanization and long vowels written with macrons (hōshō, tsunagō). Words are divided the way romanized lyrics usually are: suffixes, auxiliary verbs and prefixes stay attached (kaizokudan, aishiteru, otomodachi), particles stay separate (wa, o, ni), and brackets and punctuation are spaced normally. Numbers are read as Japanese numerals (6 becomes roku).
 - Korean, Chinese (pinyin) and other scripts are converted as well.
+- A line that is already entirely in the Latin alphabet gets no romaji line. Lines that mix scripts do.
 - Genius "Romanization" pages are already romaji and are shown as they are.
 
 ### Fix readings
@@ -67,6 +74,7 @@ Lyrics often use readings the dictionary can't guess (names, or a kanji read in 
 - **This song only** applies to the current song. **All songs** applies everywhere. The longest matching text wins.
 - Lines starting with `#` are comments. Saving re-romanizes the lyrics on screen immediately.
 - A few common names (for example 宝鐘マリン, 兎田ぺこら, 星街すいせい) are built in.
+- Fix readings only affects romaji that Lyrica generates. If a correction matches text in the lyrics, Lyrica generates the romaji for that song instead of using found romaji, so your fix takes effect.
 
 ## When a song doesn't show up
 
@@ -93,9 +101,3 @@ Lyrica sends the song title, artist and length to the lyrics sources above. It d
 - Spotify and YouTube Music selectors are kept together at the top of `src/content.js` (the `SEL` block and the YouTube Music helpers).
 - The panel's position is worked out from landmarks (sidebars, top bar, player bar). If those can't be found it docks to the right edge instead of disappearing.
 - Rebuild after editing: `npm i && node build.mjs`, then reload the extension.
-
-## Images
-<img width="1597" height="899" alt="Screenshot 2026-10-22 at 09 14 07" src="https://github.com/user-attachments/assets/73e6baa9-ec3a-4706-9879-bc9dcc7a6ed9" />
-<img width="1599" height="900" alt="Screenshot 2026-10-22 at 09 14 49" src="https://github.com/user-attachments/assets/00e813a8-51a6-4c04-9752-15b08f5f97ce" />
-<img width="1680" height="908" alt="Screenshot 2026-10-22 at 09 15 43" src="https://github.com/user-attachments/assets/763cbb15-e75e-48ec-bf7c-fd82b17f0aa1" />
-<img width="1680" height="907" alt="Screenshot 2026-10-22 at 09 16 51" src="https://github.com/user-attachments/assets/7e918cd4-2449-424f-a43a-5326400e3816" />
