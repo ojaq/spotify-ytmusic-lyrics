@@ -13,6 +13,46 @@ Lyrica finds lyrics itself instead of relying on what the site provides, draws i
 
 To update, replace the folder's contents and click the reload icon on Lyrica in `chrome://extensions`.
 
+## Screenshots
+1. Spotify
+- Regular view
+<img width="1680" height="941" alt="Screenshot 2026-11-03 at 13 30 22" src="https://github.com/user-attachments/assets/a4171363-68a0-4da7-86d6-bc927c3aa536" />
+
+- Search
+<img width="1680" height="941" alt="Screenshot 2026-11-03 at 13 30 50" src="https://github.com/user-attachments/assets/2c60fa28-b1f6-4efd-97f5-45da9e6010ba" />
+
+- Miniplayer
+<img width="1680" height="937" alt="Screenshot 2026-11-03 at 13 31 13" src="https://github.com/user-attachments/assets/7397a068-23a6-4534-9f3f-bfddee075a91" />
+
+- Picture in Picture
+<img width="1680" height="941" alt="Screenshot 2026-11-03 at 13 31 45" src="https://github.com/user-attachments/assets/75f50148-7a68-4c79-b30c-14f8890b08f9" />
+
+2. Youtube Music
+- Regular view
+<img width="1680" height="937" alt="Screenshot 2026-11-03 at 13 34 35" src="https://github.com/user-attachments/assets/360fe37e-d99e-40f5-82df-456879f32547" />
+
+- Search
+<img width="1680" height="939" alt="Screenshot 2026-11-03 at 13 35 01" src="https://github.com/user-attachments/assets/104592da-4031-4f51-ab22-51787d9b56b2" />
+
+- Miniplayer
+<img width="1680" height="939" alt="Screenshot 2026-11-03 at 13 35 21" src="https://github.com/user-attachments/assets/91a7f56d-8a9e-404c-967a-2a3d915dd742" />
+
+- Picture in Picture
+<img width="1680" height="941" alt="Screenshot 2026-11-03 at 13 35 41" src="https://github.com/user-attachments/assets/92f740f5-aad9-42ec-8ddd-0f38cf2e450f" />
+
+3. Youtube
+- Regular view
+<img width="1680" height="937" alt="Screenshot 2026-11-03 at 13 36 37" src="https://github.com/user-attachments/assets/49fd53a5-13f0-4875-91ab-c296fcacb303" />
+
+- Search
+<img width="1680" height="940" alt="Screenshot 2026-11-03 at 13 36 52" src="https://github.com/user-attachments/assets/bea8c8d1-2fd1-44b7-9325-b4648e2eac72" />
+
+- Miniplayer
+<img width="1680" height="942" alt="Screenshot 2026-11-03 at 13 37 23" src="https://github.com/user-attachments/assets/d40d1aaf-b3cb-424f-9e2a-3e3bc0497013" />
+
+- Picture in Picture
+<img width="1680" height="933" alt="Screenshot 2026-11-03 at 13 37 52" src="https://github.com/user-attachments/assets/39b54f69-97bd-4acd-8a0d-f59ec8fc1bc9" />
+
 ## Using it
 
 - Click the **Lyrica button** in the player bar (next to Spotify's lyrics button, or beside YouTube Music's player controls), or press **Alt+L**. If the site's layout changes and the button can't be placed, a floating "Lyrics" button appears instead.
