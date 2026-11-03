@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lyrica",
   "version": "1.0",
-  "description": "Synced lyrics with romaji for Spotify Web Player and YouTube Music. Finds lyrics itself from several sources.",
+  "description": "Synced lyrics with romaji for Spotify Web Player, YouTube Music and YouTube. Finds lyrics itself from several sources.",
   "icons": {
     "128": "icons/icon128.png"
   },
@@ -30,7 +30,8 @@
     {
       "matches": [
         "https://open.spotify.com/*",
-        "https://music.youtube.com/*"
+        "https://music.youtube.com/*",
+        "https://www.youtube.com/*"
       ],
       "js": [
         "content.js"
@@ -39,7 +40,8 @@
     },
     {
       "matches": [
-        "https://music.youtube.com/*"
+        "https://music.youtube.com/*",
+        "https://www.youtube.com/*"
       ],
       "js": [
         "main.js"
@@ -55,7 +57,8 @@
       ],
       "matches": [
         "https://open.spotify.com/*",
-        "https://music.youtube.com/*"
+        "https://music.youtube.com/*",
+        "https://www.youtube.com/*"
       ]
     }
   ]
